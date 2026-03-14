@@ -49,7 +49,11 @@ if st.button("Document Embedding"):
 import time
 output_parser = StrOutputParser()
 if user_prompt:
-        
+
+    if "vectors" not in st.session_state:
+        st.warning("Please click 'Document Embedding' first.")
+        st.stop()
+
     retriver = st.session_state.vectors.as_retriever()
     docs = retriver.invoke(user_prompt)
     context = "\n".join([doc.page_content for doc in docs])
